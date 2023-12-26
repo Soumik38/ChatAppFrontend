@@ -7,9 +7,9 @@ const protectedRoutes=({children,auth=false})=>{
   const isLoggedIn=localStorage.getItem('user:token')!=null || false
   console.log(isLoggedIn)
   if(!isLoggedIn && auth){
-    return <Navigate to={'/users/sign_in'}/>
+    return <Navigate to={'/sign_in'}/>
   }
-  else if(isLoggedIn && ['/users/sign_up','/users/sign_in'].includes(window.location.pathname)){
+  else if(isLoggedIn && ['/sign_up','/sign_in'].includes(window.location.pathname)){
     return <Navigate to={'/'}/>
   }
   return children
@@ -19,8 +19,8 @@ function App() {
   return (
     <Routes>
       <Route path='/dashboard' element={<protectedRoutes><Dashboard/></protectedRoutes>}/>
-      <Route path='/users/sign_in' element={<protectedRoutes auth={true}><Form isSignInPage={true}/></protectedRoutes>}/>
-      <Route path='/users/sign_up' element={<protectedRoutes><Form isSignInPage={false}/></protectedRoutes>}/>
+      <Route path='/signin' element={<protectedRoutes auth={true}><Form isSignInPage={true}/></protectedRoutes>}/>
+      <Route path='/signup' element={<protectedRoutes><Form isSignInPage={false}/></protectedRoutes>}/>
     </Routes>
   );
 }

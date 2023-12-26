@@ -15,7 +15,7 @@ const Form = ({
 const handleSubmit=async(e)=>{
   e.preventDefault()
   console.log(data)
-  const res=await fetch(`https://chatapp-7lkn.onrender.com/${isSignInPage?'login':'register'}`,{
+  const res=await fetch(`https://chatapp-backend-o1em.onrender.com/${isSignInPage?'signin':'signup'}`,{
     method:'POST',
     headers:{
       'Content-Type':'application/json',
@@ -34,7 +34,6 @@ const handleSubmit=async(e)=>{
       alert(resData)
     }
   }
-  
 }
 
   return (
@@ -47,7 +46,7 @@ const handleSubmit=async(e)=>{
         <Input label='Password' name='password' type='password' placeholder='Enter a password'  value={data.password} onChange={(e)=>setData({...data,password:e.target.value})}/>
         <Button label={isSignInPage?'Sign In':'Sign Up'} type='submit' className='w-[75%] mb-2'/>
         </form>
-        <div>{ isSignInPage ? "Don't have an account?" : "Alredy have an account?"} <span className=" text-primary cursor-pointer underline" onClick={() => navigate(`/users/${isSignInPage ? 'sign_up' : 'sign_in'}`)}>{ isSignInPage ? 'Sign up' : 'Sign in'}</span></div>
+        <div>{ isSignInPage ? "Don't have an account?" : "Alredy have an account?"} <span className=" text-primary cursor-pointer underline" onClick={() => navigate(`/${isSignInPage ? 'signup' : 'signin'}`)}>{ isSignInPage ? 'Sign up' : 'Sign in'}</span></div>
 
       </div>
       <div className='flex items-center justify-center break-words'>

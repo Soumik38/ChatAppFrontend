@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Avatar from '../assets/Avatar.svg'
 import Input from '../components/Input'
-import sendIcon from '../assets/sendIcon.svg'
+// import sendIcon from '../assets/sendIcon.svg'
 import {io} from 'socket.io-client'
 const Dashboard = () => {
 
@@ -19,28 +19,27 @@ const Dashboard = () => {
 
     console.log('messages :>>',messages)
     //socket io
-    // useEffect(()=>{
-    //     setSocket(io('https://chatapp-7lkn.onrender.com/'))
-    // },[])
+    useEffect(()=>{
+        setSocket(io('https://chatapp-backend-o1em.onrender.com/'))
+    },[])
 
-	// useEffect(() => {
-	// 	socket?.emit('addUser', user?.id);
-	// 	socket?.on('getUsers', users => {
-	// 		console.log('activeUsers :>> ', users);
-	// 	})
-	// 	socket?.on('getMessage', data => {
-    //         console.log("data :>>",data)
-    //         console.log("data ka text : >>",data.text)
-	// 		setMessages(prev => ([...prev,{text:data.text,user:data.user}]))
-	// 	})
-	// }, [socket])
+	useEffect(() => {
+		socket?.emit('addUser', user?.id);
+		socket?.on('getUsers', users => {
+			console.log('activeUsers :>> ', users);
+		})
+		socket?.on('getMessage', data => {
+            console.log("data :>>",data)
+            console.log("data ka text : >>",data.text)
+			setMessages(prev => ([...prev,{text:data.text,user:data.user}]))
+		})
+	}, [socket])
 
     // Displaying existing contacts
     useEffect(() => {
         const loggedUser = JSON.parse(localStorage.getItem('user:detail'))
         const fetchConversation = async () => {
-            console.log("imin")
-            const res = await fetch(`https://chatapp-7lkn.onrender.com/conversation/${loggedUser?.id}`, {
+            const res = await fetch(`https://chatapp-backend-o1em.onrender.com/conversation/${loggedUser?.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,7 +47,7 @@ const Dashboard = () => {
             })
             const resData = await res.json()
             setConversations(resData)
-            // console.log(conversations)
+            console.log(conversations)
         }
         fetchConversation()
     }, [])
@@ -56,7 +55,7 @@ const Dashboard = () => {
     //Dispalying all people
     useEffect(() => {
         const fetchPeople = async () => {
-            const res = await fetch(`https://chatapp-7lkn.onrender.com/users/${user?.id}`, {
+            const res = await fetch(`https://chatapp-backend-o1em.onrender.com/users/${user?.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -71,7 +70,7 @@ const Dashboard = () => {
 
 
     const fetchMessages = async (conversationId) => {
-        const res = await fetch(`https://chatapp-7lkn.onrender.com/message/${conversationId}?senderId=${user?.id}?receiverId:${partnerId}`, {
+        const res = await fetch(`https://chatapp-backend-o1em.onrender.com/message/${conversationId}?senderId=${user?.id}?receiverId:${partnerId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -92,7 +91,7 @@ const Dashboard = () => {
             text: typedMessage,
             receiverId: partnerId
 		});
-        const res = await fetch(`https://chatapp-7lkn.onrender.com/message`, {
+        const res = await fetch(`https://chatapp-backend-o1em.onrender.com/message`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
