@@ -15,7 +15,7 @@ const Form = ({
 const handleSubmit=async(e)=>{
   e.preventDefault()
   console.log(data)
-  const res=await fetch(`https://chatapp-backend-o1em.onrender.com/${isSignInPage?'signin':'signup'}`,{
+  const res=await fetch(`${process.env.BACKEND}/${isSignInPage?'signin':'signup'}`,{
     method:'POST',
     headers:{
       'Content-Type':'application/json',

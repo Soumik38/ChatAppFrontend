@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Avatar from '../assets/Avatar.svg'
 import Input from '../components/Input'
 // import sendIcon from '../assets/sendIcon.svg'
+require('dotenv').config()
 import {io} from 'socket.io-client'
 const Dashboard = () => {
 
@@ -20,7 +21,7 @@ const Dashboard = () => {
     console.log('messages :>>',messages)
     //socket io
     useEffect(()=>{
-        setSocket(io('https://chatapp-backend-o1em.onrender.com/'))
+        setSocket(io(`${process.env.BACKEND}`))
     },[])
 
 	useEffect(() => {
@@ -39,7 +40,7 @@ const Dashboard = () => {
     useEffect(() => {
         const loggedUser = JSON.parse(localStorage.getItem('user:detail'))
         const fetchConversation = async () => {
-            const res = await fetch(`https://chatapp-backend-o1em.onrender.com/conversation/${loggedUser?.id}`, {
+            const res = await fetch(`${process.env.BACKEND}/conversation/${loggedUser?.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,7 +56,7 @@ const Dashboard = () => {
     //Dispalying all people
     useEffect(() => {
         const fetchPeople = async () => {
-            const res = await fetch(`https://chatapp-backend-o1em.onrender.com/users/${user?.id}`, {
+            const res = await fetch(`${process.env.BACKEND}/users/${user?.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -70,7 +71,7 @@ const Dashboard = () => {
 
 
     const fetchMessages = async (conversationId) => {
-        const res = await fetch(`https://chatapp-backend-o1em.onrender.com/message/${conversationId}?senderId=${user?.id}?receiverId:${partnerId}`, {
+        const res = await fetch(`${process.env.BACKEND}/message/${conversationId}?senderId=${user?.id}?receiverId:${partnerId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,7 +92,7 @@ const Dashboard = () => {
             text: typedMessage,
             receiverId: partnerId
 		});
-        const res = await fetch(`https://chatapp-backend-o1em.onrender.com/message`, {
+        const res = await fetch(`${process.env.BACKEND}/message`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
