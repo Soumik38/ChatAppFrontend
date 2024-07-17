@@ -1,6 +1,7 @@
 import './App.css'
 import Form from './pages/Form'
 import Dashboard from './pages/Dashboard'
+
 import {Route,Routes,Navigate} from 'react-router-dom'
 
 const protectedRoutes=({children,auth=false})=>{

@@ -33,7 +33,9 @@ const Form = ({ isSignInPage = false }) => {
       }
     }
   }
-
+  if (!localStorage.getItem('user:token')) {
+    return <div><h1>You are not logged in</h1></div>;
+  }
   return (
     <div className='h-screen flex flex-col items-center justify-center bg-gray-100'>
       <div className='bg-white w-full max-w-md p-8 shadow-lg rounded-lg flex flex-col justify-center items-center'>
